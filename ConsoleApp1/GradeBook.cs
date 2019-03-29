@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace ConsoleApp1
@@ -16,15 +17,23 @@ namespace ConsoleApp1
             GradeStatistics stats = new GradeStatistics();
 
             float sum = 0;
-            foreach(float grade in grades)
+            foreach (float grade in grades)
             {
                 stats.HighestGrade = Math.Max(grade, stats.HighestGrade);
                 stats.LowestGrade = Math.Min(grade, stats.LowestGrade);
                 sum += grade;
             }
             stats.AverageGrade = sum / grades.Count;
-            
+
             return stats;
+        }
+
+        public void WriteGrades(TextWriter destination)
+        {
+            for (int i = 0; i < grades.Count; i++)
+            {
+                destination.WriteLine(grades[i]);
+            }
         }
 
         public void AddGrade(float grade)
@@ -39,8 +48,10 @@ namespace ConsoleApp1
             }
             set
             {
-                if (!String.IsNullOrEmpty(value))
+                if (String.IsNullOrEmpty(value))
                 {
+                    throw new ArgumentException("Name cannot be null or empty");
+                }
                     if (_name != value)
                     {
                         NameChangedEventArgs args = new NameChangedEventArgs();
@@ -50,11 +61,11 @@ namespace ConsoleApp1
                         NameChanged(this, args);
                     }
                     _name = value;
-                }
+                
             }
         }
         private string _name;
         public NameChangedDelegate NameChanged;
-       List<float> grades;
+        List<float> grades;
     }
 }
