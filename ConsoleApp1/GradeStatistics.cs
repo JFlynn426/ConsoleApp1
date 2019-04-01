@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ConsoleApp1
 {
-    class GradeStatistics
+    public class GradeStatistics
     {
         public GradeStatistics()
         {

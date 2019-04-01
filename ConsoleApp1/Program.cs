@@ -8,7 +8,7 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
 
-            GradeBook book = new GradeBook();
+            IGradeTracker book = CreateGradeBook();
 
             GetBookName(book);
             WriteResults(book);
@@ -25,14 +25,18 @@ namespace ConsoleApp1
             WriteResult("Average,", stats.AverageGrade);
             WriteResult(stats.Description, stats.LetterGrade);
         }
-
-        private static void WriteResults(GradeBook book)
+        private static IGradeTracker CreateGradeBook()
         {
+            return new ThrowAwayGradeBook();
+        }
+        private static void WriteResults(IGradeTracker book)
+        {
+            book.AddGrade(91);
             book.AddGrade(89.5f);
             book.AddGrade(75);
         }
 
-        private static void GetBookName(GradeBook book)
+        private static void GetBookName(IGradeTracker book)
         {
             try
             {
